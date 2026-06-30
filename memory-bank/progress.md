@@ -24,3 +24,42 @@
 **备注：**
 - `CLAUDE.md` 和 `AGENTS.md` 是脚手架自动生成的，与 `memory-bank/CLAUDE.md` 的链接同名——它们各自服务于不同目的（前者是 Astro 项目的 AI 指引，后者是项目整体设计文档）
 - `.vscode/extensions.json` 和 `.vscode/launch.json` 由脚手架生成，建议保留以便 VS Code 用户获得 Astro 语法支持
+
+---
+
+## 步骤 2：安装核心依赖 ✅
+
+**完成时间：** 2026-06-30
+
+**执行内容：**
+- 安装 6 个运行时依赖 + 1 个开发依赖
+- 配置 `astro.config.mjs`：添加 `@astrojs/mdx` 集成 + `@tailwindcss/vite` 插件
+- 创建 `src/styles/global.css`（Tailwind CSS 入口，含 `@import "tailwindcss"`）
+
+**最终 `package.json` 依赖：**
+
+| 依赖 | 安装版本 | 用途 |
+|------|----------|------|
+| `@astrojs/mdx` | ^4.3.14 | MDX 内容支持 |
+| `@tailwindcss/vite` | ^4.3.2 | Tailwind CSS 4 Vite 插件 |
+| `@prisma/client` | ^6.19.3 | 数据库 ORM 客户端 |
+| `tailwindcss` | ^4.3.2 | 原子化 CSS 框架 |
+| `@tailwindcss/typography` | ^0.5.20 | 排版插件（prose 类） |
+| `pinyin-pro` | ^3.28.1 | 中文标题转拼音 slug |
+| `prisma` (dev) | ^6.19.3 | Prisma CLI + 迁移工具 |
+| `@astrojs/check` (dev) | — | Astro 类型检查 |
+| `typescript` (dev) | — | TypeScript 编译器 |
+
+**与计划的偏差：**
+
+| 偏差 | 原因 |
+|------|------|
+| `@astrojs/mdx@^4.3` 代替 `^5.x` | v5 要求 `astro@^6.0.0`，与 Astro 5.18.2 不兼容 |
+| `@tailwindcss/vite` 代替 `@astrojs/tailwind` | `@astrojs/tailwind` 已弃用，Tailwind 4 官方推荐 Vite 插件（`astro add tailwind` 自动配置） |
+| `@tailwindcss/typography@^0.5` 代替 `^4.x` | npm 上最高版本为 0.5.20，4.0.0 不存在 |
+
+**验证结果：** `npx astro check` 输出 0 错误、0 警告。`npx astro dev` 启动成功。
+
+**备注：**
+- `@astrojs/mdx` 未通过 `astro add mdx` 安装（该命令试图安装 v7，与 Astro 5 不兼容），改为手动 `npm install` 后在 `astro.config.mjs` 中手动添加 `integrations: [mdx()]`
+- `@tailwindcss/vite` 与 Astro 内置 Vite 版本不同导致 TS 类型错误，已在 `astro.config.mjs` 中使用 `@type {any}` 类型断言绕过，运行时无影响

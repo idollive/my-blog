@@ -12,6 +12,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.18.2"
+    "@astrojs/mdx": "^4.3.14",
+    "@prisma/client": "^6.19.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.2",
+    "astro": "^5.18.2",
+    "pinyin-pro": "^3.28.1",
+    "tailwindcss": "^4.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "prisma": "^6.19.3",
+    "typescript": "^5.9.3"
   }
 }
