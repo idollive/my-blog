@@ -63,3 +63,37 @@
 **备注：**
 - `@astrojs/mdx` 未通过 `astro add mdx` 安装（该命令试图安装 v7，与 Astro 5 不兼容），改为手动 `npm install` 后在 `astro.config.mjs` 中手动添加 `integrations: [mdx()]`
 - `@tailwindcss/vite` 与 Astro 内置 Vite 版本不同导致 TS 类型错误，已在 `astro.config.mjs` 中使用 `@type {any}` 类型断言绕过，运行时无影响
+
+---
+
+## 步骤 3：初始化 Prisma ✅
+
+**完成时间：** 2026-06-30
+
+**执行内容：**
+- 运行 `npx prisma init` 生成 `prisma/schema.prisma`、`prisma.config.ts` 和 `.env`
+- 将 `prisma/schema.prisma` 中的 provider 从 `postgresql` 改为 `mysql`
+- 将 `.env` 中的 `DATABASE_URL` 替换为 MySQL 连接字符串占位格式
+- 在 `.env` 中添加 `ADMIN_PASSWORD_HASH` 键（占位值）
+
+**与计划的偏差：**
+
+| 偏差 | 原因 |
+|------|------|
+| 新增 `prisma.config.ts` 文件 | Prisma 6.19.3 引入的新配置文件格式，分离了 datasource URL 和 migration 路径配置 |
+| `generator client` 输出到 `src/generated/prisma` | Prisma 6 默认将客户端生成到项目源码目录而非 `node_modules`，后续步骤导入路径需相应调整 |
+
+**最终状态：**
+
+| 文件 | 关键内容 |
+|------|----------|
+| `prisma/schema.prisma` | `provider = "mysql"`，`generator client` → `src/generated/prisma` |
+| `prisma.config.ts` | datasource URL 从 `.env` 读取，engine: "classic" |
+| `.env` | `DATABASE_URL` (MySQL 占位符) + `ADMIN_PASSWORD_HASH` (占位符) |
+
+**验证结果：** `npx prisma format` 格式化成功，`npx prisma validate` 输出 "The schema at prisma\schema.prisma is valid 🚀"。
+
+**备注：**
+- 实际的 PlanetScale 连接字符串将在步骤 5 填写
+- `ADMIN_PASSWORD_HASH` 的实际值将在步骤 19 生成
+- `prisma.config.ts` 要求 `dotenv` 依赖（`import "dotenv/config"`），当前由 Prisma CLI 内置提供，后续若独立运行可能需要显式安装
