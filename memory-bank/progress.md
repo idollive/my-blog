@@ -114,7 +114,8 @@
 | 项 | 值 |
 |----|-----|
 | 远程仓库 | `https://github.com/idollive/my-blog.git` |
-| 分支 | `master` |
+| 分支 | `main` |
+
 | 提交数 | 4（初始 + 步骤 1~3） |
 | `.gitignore` | 已覆盖 `node_modules/`、`.env`、`dist/`、`.astro/`、`/src/generated/prisma` |
 
