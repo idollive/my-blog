@@ -97,3 +97,35 @@
 - 实际的 PlanetScale 连接字符串将在步骤 5 填写
 - `ADMIN_PASSWORD_HASH` 的实际值将在步骤 19 生成
 - `prisma.config.ts` 要求 `dotenv` 依赖（`import "dotenv/config"`），当前由 Prisma CLI 内置提供，后续若独立运行可能需要显式安装
+
+---
+
+## 步骤 4：初始化 Git 仓库 ✅
+
+**完成时间：** 2026-06-30
+
+**执行内容：**
+- Git 仓库已在步骤 1 初始化，`.gitignore` 已覆盖 `node_modules/`、`.env`、`dist/`、`.astro/`
+- 添加远程仓库 `origin` → `https://github.com/idollive/my-blog.git`
+- 将全部 4 条提交推送到 GitHub
+
+**最终状态：**
+
+| 项 | 值 |
+|----|-----|
+| 远程仓库 | `https://github.com/idollive/my-blog.git` |
+| 分支 | `master` |
+| 提交数 | 4（初始 + 步骤 1~3） |
+| `.gitignore` | 已覆盖 `node_modules/`、`.env`、`dist/`、`.astro/`、`/src/generated/prisma` |
+
+**与计划的偏差：**
+
+| 偏差 | 原因 |
+|------|------|
+| 无需重新 `git init` | 步骤 1 的 `create-astro` CLI 已自动初始化仓库并创建初始提交 |
+| `gh` CLI 不可用 | 未安装 GitHub CLI，手动在 GitHub 网页创建仓库后添加 remote |
+
+**验证结果：** `git log --oneline` 显示 4 条提交。`git remote -v` 显示 `origin → https://github.com/idollive/my-blog.git (fetch/push)`。
+
+**备注：**
+- 工作区有未提交变更（`memory-bank/CLAUDE.md` + `.claude/skills/`），建议在步骤 5 前提交
